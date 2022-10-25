@@ -1,12 +1,11 @@
 {
-  "id": "better-journal",
-  "title": "<human readable title for better-journal>",
-  "description": "<description of the package>",
+  "id": "journal-improvements",
+  "title": "Journal Improvements",
+  "description": "TODO",
   "authors": [
     {
-      "name": "<your name>",
-      "email": "<optionally your e-mail address>",
-      "discord": "<optionally your discord username>"
+      "name": "ClipplerBlood",
+      "discord": "ClipplerBlood#8146"
     }
   ],
   "url": "This is auto replaced",
@@ -20,8 +19,8 @@
     "verified": "10"
   },
   "scripts": [],
-  "esmodules": ["module/better-journal.js"],
-  "styles": ["styles/better-journal.css"],
+  "esmodules": ["module/journal-improvements.js"],
+  "styles": ["styles/journal-improvements.css"],
   "packs": [],
   "languages": [
     {

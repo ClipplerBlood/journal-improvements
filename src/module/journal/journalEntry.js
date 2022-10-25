@@ -2,7 +2,7 @@
 
 import { i18n } from '../utils.js';
 
-export class BetterJournalEntry extends JournalEntry {
+export class ImprovedJournalEntry extends JournalEntry {
   /**
    * @override
    * @param data
@@ -16,7 +16,7 @@ export class BetterJournalEntry extends JournalEntry {
     // After creating, add a text page with the same name
     // TODO: check if we need to handle packs and folders. See JournalEntryPage.implementation.createDialog
 
-    if (game.settings.get('better-journal', 'createDefaultPage')) {
+    if (game.settings.get('journal-improvements', 'createDefaultPage')) {
       const options = { renderSheet: false };
       const newPage = this.createQuickPage({ name: this.name, options });
       // Refresh apps after creating the page
@@ -32,9 +32,9 @@ export class BetterJournalEntry extends JournalEntry {
    * @private
    */
   createQuickPage({ name = undefined, type = 'text', options = {} }) {
-    if (name == null) name = name ?? i18n(`betterJournal.defaultPageNames.${type}`);
+    if (name == null) name = name ?? i18n(`journalImprovements.defaultPageNames.${type}`);
     options = mergeObject(options, { parent: this });
-    options.renderSheet = options.renderSheet ?? !game.settings.get('better-journal', 'createSilent');
+    options.renderSheet = options.renderSheet ?? !game.settings.get('journal-improvements', 'createSilent');
     return JournalEntryPage.create({ name, type }, options);
   }
 }

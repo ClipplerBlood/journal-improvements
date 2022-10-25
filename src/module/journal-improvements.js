@@ -1,14 +1,14 @@
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
-import { BetterJournalSheet } from './journal/journalSheet.js';
-import { BetterJournalEntry } from './journal/journalEntry.js';
+import { ImprovedJournalSheet } from './journal/journalSheet.js';
+import { ImprovedJournalEntry } from './journal/journalEntry.js';
 
 // Initialize module
 Hooks.once('init', async () => {
-  console.log('better-journal | Initializing better-journal');
+  console.log('journal-improvements | Initializing journal-improvements');
 
-  CONFIG.JournalEntry.documentClass = BetterJournalEntry;
-  Journal.registerSheet('better-journal', BetterJournalSheet, { makeDefault: true });
+  CONFIG.JournalEntry.documentClass = ImprovedJournalEntry;
+  Journal.registerSheet('journal-improvements', ImprovedJournalSheet, { makeDefault: true });
 
   // Register custom module settings
   registerSettings();

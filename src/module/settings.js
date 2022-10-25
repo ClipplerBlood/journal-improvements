@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 export function registerSettings() {
-  game.settings.register('better-journal', 'createDefaultPage', {
-    name: 'betterJournal.settings.createDefaultPageName',
-    hint: 'betterJournal.settings.createDefaultPageHint',
+  game.settings.register('journal-improvements', 'createDefaultPage', {
+    name: 'journalImprovements.settings.createDefaultPageName',
+    hint: 'journalImprovements.settings.createDefaultPageHint',
     scope: 'client',
     config: true,
     requiresReload: false,
@@ -13,9 +13,9 @@ export function registerSettings() {
     default: false,
   });
 
-  game.settings.register('better-journal', 'createSilent', {
-    name: 'betterJournal.settings.createSilentPageName',
-    hint: 'betterJournal.settings.createSilentPageHint',
+  game.settings.register('journal-improvements', 'createSilent', {
+    name: 'journalImprovements.settings.createSilentPageName',
+    hint: 'journalImprovements.settings.createSilentPageHint',
     scope: 'client',
     config: true,
     requiresReload: false,
@@ -24,9 +24,9 @@ export function registerSettings() {
   });
 
   for (const t of ['Text', 'Image', 'Pdf', 'Video']) {
-    game.settings.register('better-journal', `hideButton${t}`, {
-      name: `betterJournal.settings.hideButtons.${t}`,
-      hint: `betterJournal.settings.hideButtons.${t}Hint`,
+    game.settings.register('journal-improvements', `hideButton${t}`, {
+      name: `journalImprovements.settings.hideButtons.${t}`,
+      hint: `journalImprovements.settings.hideButtons.${t}Hint`,
       scope: 'client',
       config: true,
       requiresReload: false,
@@ -37,7 +37,7 @@ export function registerSettings() {
 }
 
 export function getHiddenButtons() {
-  const g = (t) => game.settings.get('better-journal', `hideButton${t}`);
+  const g = (t) => game.settings.get('journal-improvements', `hideButton${t}`);
   return {
     text: g('Text'),
     image: g('Image'),

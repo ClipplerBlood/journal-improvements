@@ -21,7 +21,7 @@ import rollupConfig from './rollup.config.mjs';
 /*  CONFIGURATION   */
 /********************/
 
-const packageId = 'better-journal';
+const packageId = 'journal-improvements';
 const sourceDirectory = './src';
 const distDirectory = './dist';
 const stylesDirectory = `${sourceDirectory}/styles`;

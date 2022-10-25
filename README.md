@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2022 Johannes Loher
 SPDX-License-Identifier: MIT
 -->
 
-# better-journal
+# journal-improvements
 
 Please add your description here.
 

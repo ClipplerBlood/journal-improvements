@@ -6,7 +6,7 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default () => ({
-  input: 'src/module/better-journal.js',
+  input: 'src/module/journal-improvements.js',
   output: {
     dir: 'dist/module',
     format: 'es',
