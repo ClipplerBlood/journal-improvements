@@ -3,7 +3,7 @@ import { getHiddenButtons } from '../settings.js';
 export class ImprovedJournalSheet extends JournalSheet {
   static get defaultOptions() {
     const classes = ['sheet', 'journal-sheet', 'journal-entry', 'journal-improvements'];
-    if (game.modules.get('pf2e-dorako-ui').active) classes.push('ij-dorako-fix');
+    if (game.modules.get('pf2e-dorako-ui')?.active) classes.push('ij-dorako-fix');
 
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: classes,
