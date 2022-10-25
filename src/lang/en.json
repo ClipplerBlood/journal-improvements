@@ -1,5 +1,6 @@
 {
   "journalImprovements": {
+    "sheetName": "Improved Journal Sheet",
     "settings": {
       "createDefaultPageName": "Default Page",
       "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",

@@ -2,13 +2,17 @@ import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
 import { ImprovedJournalSheet } from './journal/journalSheet.js';
 import { ImprovedJournalEntry } from './journal/journalEntry.js';
+import { i18n } from './utils.js';
 
 // Initialize module
 Hooks.once('init', async () => {
   console.log('journal-improvements | Initializing journal-improvements');
 
   CONFIG.JournalEntry.documentClass = ImprovedJournalEntry;
-  Journal.registerSheet('journal-improvements', ImprovedJournalSheet, { makeDefault: true });
+  Journal.registerSheet('journal-improvements', ImprovedJournalSheet, {
+    makeDefault: true,
+    label: i18n('journalImprovements.sheetName'),
+  });
 
   // Register custom module settings
   registerSettings();
