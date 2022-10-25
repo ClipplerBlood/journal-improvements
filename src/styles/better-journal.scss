@@ -5,3 +5,20 @@
     visibility: hidden;
   }
 }
+
+.sheet.journal-entry .journal-sidebar .action-buttons {
+  .add-page-buttons {
+    display: flex;
+    margin: 0.5rem 0;
+    height: 28px;
+
+    button {
+      margin: 0 0.125rem;
+      padding: 0;
+
+      i {
+        margin-right: 0;
+      }
+    }
+  }
+}

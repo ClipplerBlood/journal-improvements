@@ -2,9 +2,19 @@
   "betterJournal": {
     "settings": {
       "createDefaultPageName": "Default Page",
-      "createDefaultPageHint": "After creating a new journal, add a page with the same name in it",
+      "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",
       "createSilentPageName": "Silent Page Creation",
-      "createSilentPageHint": "When a page is created, skip opening the edit dialog"
+      "createSilentPageHint": "When a page is created, skip opening the edit dialog.",
+      "hideButtons": {
+        "Text": "Hide create button: Text",
+        "TextHint": "",
+        "Image": "Hide create button: Image",
+        "ImageHint": "",
+        "Pdf": "Hide create button: Pdf",
+        "PdfHint": "",
+        "Video": "Hide create button: Video",
+        "VideoHint": ""
+      }
     },
     "tooltips": {
       "createText": "Add Text page",

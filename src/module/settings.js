@@ -22,4 +22,26 @@ export function registerSettings() {
     type: Boolean,
     default: false,
   });
+
+  for (const t of ['Text', 'Image', 'Pdf', 'Video']) {
+    game.settings.register('better-journal', `hideButton${t}`, {
+      name: `betterJournal.settings.hideButtons.${t}`,
+      hint: `betterJournal.settings.hideButtons.${t}Hint`,
+      scope: 'client',
+      config: true,
+      requiresReload: false,
+      type: Boolean,
+      default: false,
+    });
+  }
+}
+
+export function getHiddenButtons() {
+  const g = (t) => game.settings.get('better-journal', `hideButton${t}`);
+  return {
+    text: g('Text'),
+    image: g('Image'),
+    pdf: g('Pdf'),
+    video: g('Video'),
+  };
 }

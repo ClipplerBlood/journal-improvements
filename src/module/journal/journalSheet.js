@@ -1,9 +1,17 @@
+import { getHiddenButtons } from '../settings.js';
+
 export class BetterJournalSheet extends JournalSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['sheet', 'journal-sheet', 'journal-entry', 'better-journal'],
       template: 'modules/better-journal/templates/journal-sheet.html',
     });
+  }
+
+  getData(options) {
+    const data = super.getData(options);
+    data.hiddenButtons = getHiddenButtons();
+    return data;
   }
 
   /**

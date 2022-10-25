@@ -38,27 +38,36 @@
       </button>
       {{#if editable}}
         <div class="add-page-buttons">
-          <button type="button" data-action="quickCreate" data-type="text"
-                  data-tooltip="betterJournal.tooltips.createText">
-            <i class="fa-solid fa-file-lines"></i>
-          </button>
+          {{#unless hiddenButtons.text}}
+            <button type="button" data-action="quickCreate" data-type="text"
+                    data-tooltip="betterJournal.tooltips.createText">
+              <i class="fa-solid fa-file-lines"></i>
+            </button>
+          {{/unless}}
 
-          <button type="button" data-action="quickCreate" data-type="image"
-                  data-tooltip="betterJournal.tooltips.createImage">
-            <i class="fa-solid fa-file-image"></i>
-          </button>
+          {{#unless hiddenButtons.image}}
+            <button type="button" data-action="quickCreate" data-type="image"
+                    data-tooltip="betterJournal.tooltips.createImage">
+              <i class="fa-solid fa-file-image"></i>
+            </button>
+          {{/unless}}
 
-          <button type="button" data-action="quickCreate" data-type="pdf"
-                  data-tooltip="betterJournal.tooltips.createPdf">
-            <i class="fa-solid fa-file-pdf"></i>
-          </button>
+          {{#unless hiddenButtons.pdf}}
+            <button type="button" data-action="quickCreate" data-type="pdf"
+                    data-tooltip="betterJournal.tooltips.createPdf">
+              <i class="fa-solid fa-file-pdf"></i>
+            </button>
+          {{/unless}}
 
-          <button type="button" data-action="quickCreate" data-type="video"
-                  data-tooltip="betterJournal.tooltips.createVideo">
-            <i class="fa-solid fa-file-video"></i>
-          </button>
+          {{#unless hiddenButtons.video}}
+            <button type="button" data-action="quickCreate" data-type="video"
+                    data-tooltip="betterJournal.tooltips.createVideo">
+              <i class="fa-solid fa-file-video"></i>
+            </button>
+          {{/unless}}
         </div>
       {{/if}}
+
       <button class="next" type="button" data-action="next" data-tooltip="{{localize 'JOURNAL.NextPage'}}">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
