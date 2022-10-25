@@ -3,5 +3,13 @@
 // SPDX-License-Identifier: MIT
 
 export function registerSettings() {
-  // Register any custom module settings here
+  game.settings.register('better-journal', 'createDefaultPage', {
+    name: 'betterJournal.settings.createDefaultPageName',
+    hint: 'betterJournal.settings.createDefaultPageHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: false,
+  });
 }

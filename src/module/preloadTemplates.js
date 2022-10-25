@@ -5,6 +5,7 @@
 export async function preloadTemplates() {
   const templatePaths = [
     // Add paths to "modules/better-journal/templates"
+    'modules/better-journal/templates/journal-sheet.html',
   ];
 
   return loadTemplates(templatePaths);
