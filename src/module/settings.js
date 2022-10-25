@@ -45,3 +45,14 @@ export function getHiddenButtons() {
     video: g('Video'),
   };
 }
+
+const noteIcons = {
+  text: 'modules/journal-improvements/assets/file.svg',
+  image: 'modules/journal-improvements/assets/file-image.svg',
+  pdf: 'modules/journal-improvements/assets/file-pdf.svg',
+  video: 'modules/journal-improvements/assets/file-video.svg',
+};
+
+export function getNoteIcon(type) {
+  return noteIcons[type];
+}
