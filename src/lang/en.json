@@ -6,6 +6,8 @@
       "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",
       "createSilentPageName": "Silent Page Creation",
       "createSilentPageHint": "When a page is created, skip opening the edit dialog.",
+      "pinIconsName": "Content Type Pin icons",
+      "pinIconsHint": "When creating a Pin by dragging a page from a Journal on the canvas, use the content type icon (see the icons used for the button panel) for the pin rather than the default one.",
       "hideButtons": {
         "Text": "Hide create button: Text",
         "TextHint": "",

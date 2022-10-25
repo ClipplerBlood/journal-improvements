@@ -44,6 +44,7 @@ Hooks.on('renderNoteConfig', async (app, element, data) => {
 });
 
 function renderNoteConfig(app, element, _data) {
+  if (!game.settings.get('journal-improvements', 'pinIcons')) return;
   const fd = new FormDataExtended(app.form);
 
   const iconSelected = fd.object['icon.selected'];

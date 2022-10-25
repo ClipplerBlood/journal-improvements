@@ -23,6 +23,16 @@ export function registerSettings() {
     default: false,
   });
 
+  game.settings.register('journal-improvements', 'pinIcons', {
+    name: 'journalImprovements.settings.pinIconsName',
+    hint: 'journalImprovements.settings.pinIconsHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: false,
+  });
+
   for (const t of ['Text', 'Image', 'Pdf', 'Video']) {
     game.settings.register('journal-improvements', `hideButton${t}`, {
       name: `journalImprovements.settings.hideButtons.${t}`,
