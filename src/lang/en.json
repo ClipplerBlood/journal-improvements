@@ -2,7 +2,9 @@
   "betterJournal": {
     "settings": {
       "createDefaultPageName": "Default Page",
-      "createDefaultPageHint": "After creating a new journal, add a page with the same name in it"
+      "createDefaultPageHint": "After creating a new journal, add a page with the same name in it",
+      "createSilentPageName": "Silent Page Creation",
+      "createSilentPageHint": "When a page is created, skip opening the edit dialog"
     },
     "tooltips": {
       "createText": "Add Text page",
