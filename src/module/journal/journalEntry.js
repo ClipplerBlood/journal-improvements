@@ -1,5 +1,7 @@
 /* globals JournalEntryPage */
 
+import { i18n } from '../utils.js';
+
 export class BetterJournalEntry extends JournalEntry {
   /**
    * @override
@@ -28,7 +30,7 @@ export class BetterJournalEntry extends JournalEntry {
    * @private
    */
   createQuickPage({ name = undefined, type = 'text', options = {} }) {
-    name = name ?? JournalEntryPage.defaultName();
+    if (name == null) name = name ?? i18n(`betterJournal.defaultPageNames.${type}`);
     options = mergeObject(options, { parent: this });
     return JournalEntryPage.create({ name, type }, options);
   }

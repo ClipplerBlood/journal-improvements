@@ -9,6 +9,12 @@
       "createImage": "Add Image page",
       "createPdf": "Add PDF page",
       "createVideo": "Add Video page"
+    },
+    "defaultPageNames": {
+      "text": "New Page",
+      "image": "New Image",
+      "pdf": "New PDF",
+      "video": "New Video"
     }
   }
 }

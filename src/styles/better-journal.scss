@@ -1,4 +1,7 @@
-/* ---------------------------- */
-/*             Sass             */
-/* This is your Sass entry file */
-/* ---------------------------- */
+.sheet.journal-entry article img:not(.nopopout) {
+  // Hide empty images
+  &:not([src]),
+  &[src=''] {
+    visibility: hidden;
+  }
+}
