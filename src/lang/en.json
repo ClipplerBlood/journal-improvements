@@ -30,6 +30,13 @@
       "image": "New Image",
       "pdf": "New PDF",
       "video": "New Video"
+    },
+    "keybindings": {
+      "paste": "Journal Improvements Paste",
+      "pastePlain": "Journal Improvements Paste (plain)"
+    },
+    "notifications": {
+      "warnPastePermission": "Failed to parse clipboard. Make sure your browser supports the navigator API. Check the module documentation for how to enable it."
     }
   }
 }

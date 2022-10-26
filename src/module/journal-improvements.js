@@ -3,6 +3,7 @@ import { preloadTemplates } from './preloadTemplates.js';
 import { ImprovedJournalSheet } from './journal/journalSheet.js';
 import { ImprovedJournalEntry } from './journal/journalEntry.js';
 import { i18n } from './utils.js';
+import { _onPaste } from './pasting.js';
 
 // Initialize module
 Hooks.once('init', async () => {
@@ -14,27 +15,34 @@ Hooks.once('init', async () => {
     label: i18n('journalImprovements.sheetName'),
   });
 
-  // CONFIG.Note.documentClass = ImprovedNote;
+  game.keybindings.register('journal-improvements', 'paste', {
+    name: 'journalImprovements.keybindings.paste',
+    restricted: true,
+    uneditable: [{ key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL] }],
+    onDown: () => _onPaste(false),
+    precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+  });
+
+  game.keybindings.register('journal-improvements', 'pastePlain', {
+    name: 'journalImprovements.keybindings.pastePlain',
+    restricted: true,
+    uneditable: [
+      { key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL, KeyboardManager.MODIFIER_KEYS.SHIFT] },
+    ],
+    onDown: () => _onPaste(true),
+    precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+  });
 
   // Register custom module settings
   registerSettings();
 
   // Preload Handlebars templates
   await preloadTemplates();
-
-  // Register custom sheets (if any)
 });
 
-// Setup module
-Hooks.once('setup', async () => {
-  // Do anything after initialization but before
-  // ready
-});
+Hooks.once('setup', async () => {});
 
-// When ready
-Hooks.once('ready', async () => {
-  // Do anything once the module is ready
-});
+Hooks.once('ready', async () => {});
 
 Hooks.on('renderNoteConfig', async (app, element, data) => {
   // TODO: fix commented lines

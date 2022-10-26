@@ -26,15 +26,17 @@ export class ImprovedJournalEntry extends JournalEntry {
 
   /**
    * Creates a page in the journal
-   * @param name
-   * @param type
-   * @param options
+   * @param name page name
+   * @param type page type
+   * @param data other object creation data
+   * @param options creation options
    * @private
    */
-  createQuickPage({ name = undefined, type = 'text', options = {} }) {
+  createQuickPage({ name = undefined, type = 'text', data = {}, options = {} }) {
     if (name == null) name = name ?? i18n(`journalImprovements.defaultPageNames.${type}`);
     options = mergeObject(options, { parent: this });
     options.renderSheet = options.renderSheet ?? !game.settings.get('journal-improvements', 'createSilent');
-    return JournalEntryPage.create({ name, type }, options);
+    data = mergeObject(data, { name, type });
+    return JournalEntryPage.create(data, options);
   }
 }

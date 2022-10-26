@@ -52,7 +52,11 @@ export class ImprovedJournalSheet extends JournalSheet {
    */
   async quickCreatePage(type) {
     await this.document.createQuickPage({ type: type });
+    await this.renderLastPage();
+  }
+
+  renderLastPage() {
     const lastPageIndex = this._pages.length - 1;
-    this.render(false, { pageIndex: lastPageIndex });
+    return this.render(false, { pageIndex: lastPageIndex });
   }
 }
