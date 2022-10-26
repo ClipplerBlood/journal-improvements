@@ -50,7 +50,7 @@ export function registerSettings() {
     config: true,
     requiresReload: false,
     type: String,
-    default: 'journal-uploads',
+    default: 'uploads/journal',
   });
 
   for (const t of ['Text', 'Image', 'Pdf', 'Video']) {

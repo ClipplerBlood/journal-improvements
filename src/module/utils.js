@@ -13,10 +13,20 @@ function getSource() {
 }
 
 async function createFolder(source, folderPath) {
-  try {
-    await FilePicker.browse(source, folderPath);
-  } catch (error) {
-    await FilePicker.createDirectory(source, folderPath);
+  const progressivePaths = [];
+  const split = folderPath.split('/'); // TODO: check if other OS use backslash
+  split.forEach((subPath) => {
+    const p = (progressivePaths.at(-1) ?? '') + '/' + subPath;
+    progressivePaths.push(p);
+  });
+
+  for (const path of progressivePaths) {
+    try {
+      await FilePicker.browse(source, path);
+      return;
+    } catch (error) {
+      await FilePicker.createDirectory(source, path);
+    }
   }
 }
 
