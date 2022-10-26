@@ -33,6 +33,26 @@ export function registerSettings() {
     default: false,
   });
 
+  game.settings.register('journal-improvements', 'pasteToPageImage', {
+    name: 'journalImprovements.settings.pasteToPageImageName',
+    hint: 'journalImprovements.settings.pasteToPageImageHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register('journal-improvements', 'uploadFolder', {
+    name: 'journalImprovements.settings.uploadFolderName',
+    hint: 'journalImprovements.settings.uploadFolderHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: String,
+    default: 'journal-uploads',
+  });
+
   for (const t of ['Text', 'Image', 'Pdf', 'Video']) {
     game.settings.register('journal-improvements', `hideButton${t}`, {
       name: `journalImprovements.settings.hideButtons.${t}`,

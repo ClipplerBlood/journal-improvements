@@ -8,6 +8,10 @@
       "createSilentPageHint": "When a page is created, skip opening the edit dialog.",
       "pinIconsName": "Content Type Pin icons",
       "pinIconsHint": "When creating a Pin by dragging a page from a Journal on the canvas, use the content type icon (see the icons used for the button panel) for the pin rather than the default one.",
+      "uploadFolderName": "Upload folder",
+      "uploadFolderHint": "Path to folder for uploading pasted images.",
+      "pasteToPageImageName": "Paste images to Image Pages",
+      "pasteToPageImageHint": "When pasting images in Journals, paste them in an \"Image Page\" instead of a \"Text Page\".",
       "hideButtons": {
         "Text": "Hide create button: Text",
         "TextHint": "",

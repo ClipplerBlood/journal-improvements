@@ -1,5 +1,5 @@
 import { ImprovedJournalSheet } from './journal/journalSheet.js';
-import { i18n } from './utils.js';
+import { i18n, jiUploadImageBlob } from './utils.js';
 
 export async function _onPaste(plain) {
   console.log(`journal-improvements | _onPaste called with plain = ${plain}`);
@@ -14,24 +14,49 @@ export async function _onPaste(plain) {
   const clipboardItems = await _getClipboardItems();
   if (!clipboardItems) return;
 
-  // Parse the text/html
+  // Definitions
   const textItems = [];
+  const imgItems = [];
   const type = plain ? 'text/plain' : 'text/html';
+  const getImgType = (ci) => ci.types.find((t) => t.includes('image'));
+  const pasteToPageImage = game.settings.get('journal-improvements', 'pasteToPageImage');
+  const parser = new DOMParser();
+
   for (const ci of clipboardItems) {
-    if (!ci.types.includes(type)) continue;
-    let t = await ci.getType(type);
-    t = await t.text();
-    if (!t) continue;
-    textItems.push(t);
+    // If the item is not an image, create a journal page with the text or html data
+    const imgType = getImgType(ci);
+    if (!imgType) {
+      const text = await (await ci.getType(type)).text();
+      if (!text) continue;
+      await journal.createQuickPage({ type: 'text', data: { 'text.content': text } });
+      continue;
+    }
+
+    // Otherwise, two behaviors, depending on if the image has html or not and if the setting is enabled
+    let htmlText;
+    if (ci.types.includes('text/html')) htmlText = await (await ci.getType('text/html'))?.text();
+
+    // If no html, image should be uploaded, setting the html text for further processing
+    if (!htmlText) {
+      const imgBlob = await ci.getType(imgType);
+      const src = await jiUploadImageBlob(imgBlob);
+      if (!src) throw 'Image Upload failed';
+      htmlText = `<img src="${src}">`;
+    }
+
+    // If the setting is on, create a new image page with the image's src, otherwise paste the image html in a text page
+    if (pasteToPageImage) {
+      const parsed = parser.parseFromString(htmlText, 'text/html');
+      const imgElement = parsed.querySelector('img');
+      const src = imgElement?.src;
+      await journal.createQuickPage({ type: 'image', data: { src: src } });
+    } else {
+      await journal.createQuickPage({ type: 'text', data: { 'text.content': htmlText } });
+    }
   }
 
-  // For each pasted text entry, create a new page in the journal
-  for (const ti of textItems) {
-    await journal.createQuickPage({ data: { type: 'text', 'text.content': ti } });
-  }
-  await journal.renderLastPage();
-
-  console.log(clipboardItems, textItems);
+  await activeApp.renderLastPage();
+  console.log(clipboardItems, textItems, imgItems);
 }
 
 /**
