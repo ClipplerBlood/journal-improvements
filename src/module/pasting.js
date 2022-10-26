@@ -15,8 +15,6 @@ export async function _onPaste(plain) {
   if (!clipboardItems) return;
 
   // Definitions
-  const textItems = [];
-  const imgItems = [];
   const type = plain ? 'text/plain' : 'text/html';
   const getImgType = (ci) => ci.types.find((t) => t.includes('image'));
   const pasteToPageImage = game.settings.get('journal-improvements', 'pasteToPageImage');
@@ -56,7 +54,6 @@ export async function _onPaste(plain) {
   }
 
   await activeApp.renderLastPage();
-  console.log(clipboardItems, textItems, imgItems);
 }
 
 /**
