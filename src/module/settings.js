@@ -3,6 +3,16 @@
 // SPDX-License-Identifier: MIT
 
 export function registerSettings() {
+  game.settings.register('journal-improvements', 'integratedEditor', {
+    name: 'journalImprovements.settings.integratedEditorName',
+    hint: 'journalImprovements.settings.integratedEditorHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: 'true',
+  });
+
   game.settings.register('journal-improvements', 'createDefaultPage', {
     name: 'journalImprovements.settings.createDefaultPageName',
     hint: 'journalImprovements.settings.createDefaultPageHint',

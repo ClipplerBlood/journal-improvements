@@ -2,6 +2,8 @@
   "journalImprovements": {
     "sheetName": "Improved Journal Sheet",
     "settings": {
+      "integratedEditorName": "Integrated Editor",
+      "integratedEditorHint": "Open page editor inside the journal screen instead of opening of a separate page editor.",
       "createDefaultPageName": "Default Page",
       "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",
       "createSilentPageName": "Silent Page Creation",
