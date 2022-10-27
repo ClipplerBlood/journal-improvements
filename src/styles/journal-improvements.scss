@@ -34,6 +34,7 @@
 .sheet.journal-improvements .editor {
   max-height: none;
   height: 100% !important;
+  min-height: 100px;
   .editor-edit {
     position: absolute;
   }
