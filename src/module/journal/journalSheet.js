@@ -25,8 +25,8 @@ export class ImprovedJournalSheet extends JournalSheet {
    */
   _getPageData() {
     const _pageData = super._getPageData();
-    // Make pages start from 1 instead of 0
-    _pageData.forEach((p) => p.number++);
+    // Make pages start from 1 instead of 0 (if pages start from 0)
+    if (_pageData[0]?.number === 0) _pageData.forEach((p) => p.number++);
     return _pageData;
   }
 
