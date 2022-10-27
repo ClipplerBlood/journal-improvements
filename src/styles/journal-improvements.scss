@@ -30,6 +30,18 @@
   white-space: nowrap;
 }
 
+// Integrated editor
+.sheet.journal-improvements .editor {
+  max-height: none;
+  height: 100% !important;
+  .editor-edit {
+    position: absolute;
+  }
+  .tox {
+    height: 624px !important;
+  }
+}
+
 // ============================
 //    EXTERNAL UI INTEGRATION
 // ============================
