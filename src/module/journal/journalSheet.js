@@ -75,6 +75,7 @@ export class ImprovedJournalSheet extends JournalSheet {
    */
   async _renderPageViews() {
     if (this._isDefaultEdit) return super._renderPageViews();
+    const engine = game.settings.get('journal-improvements', 'editorEngine') ?? 'tinymce';
 
     for (const pageNode of this.element[0].querySelectorAll('.journal-entry-page')) {
       const id = pageNode.dataset.pageId;
@@ -90,7 +91,8 @@ export class ImprovedJournalSheet extends JournalSheet {
       // If is text page, render the editor in this sheet
       if (isText) {
         data.editable = edit != null;
-        data.enrichedPageContent = await TextEditor.enrichHTML(data.data?.text?.content, { async: true });
+        data.engine = engine;
+        // data.enrichedPageContent = await TextEditor.enrichHTML(data.data?.text?.content, { async: true });
         view = await renderTemplate('modules/journal-improvements/templates/journal-sheet-text-page.html', data);
         view = $(view); // to Jquery
 
@@ -137,7 +139,7 @@ export class ImprovedJournalSheet extends JournalSheet {
     const headerH1 = articlePage.find('header h1');
     const pageId = articlePage.data('pageId');
     const pageName = headerH1.text();
-    const nameInput = $(`<input type='text' value="${pageName}">`);
+    const nameInput = $(`<input type="text" value="${pageName}">`);
     const that = this;
     nameInput.on('change', async function (event) {
       event.preventDefault();
@@ -152,6 +154,77 @@ export class ImprovedJournalSheet extends JournalSheet {
   }
 
   /**
+   * Activate an editor instance present within the form
+   * Custom code starts at symbol <-
+   * @param {HTMLElement} div  The element which contains the editor
+   * @protected
+   */
+  _activateEditor(div) {
+    // Get the editor content div
+    const name = div.dataset.edit;
+    const engine = div.dataset.engine || 'tinymce';
+    const collaborate = div.dataset.collaborate === 'true';
+    const button = div.previousElementSibling;
+    const hasButton = button && button.classList.contains('editor-edit');
+    const wrap = div.parentElement.parentElement;
+    const wc = div.closest('.window-content');
+
+    // Determine the preferred editor height
+    const heights = [wrap.offsetHeight, wc ? wc.offsetHeight : null];
+    if (div.offsetHeight > 0) heights.push(div.offsetHeight);
+    const height = Math.min(...heights.filter((h) => Number.isFinite(h)));
+
+    // Get initial content
+    const options = {
+      target: div,
+      fieldName: name,
+      save_onsavecallback: () => this.saveEditor(name),
+      height,
+      engine,
+      collaborate,
+    };
+
+    if (engine === 'prosemirror') options.plugins = this._configureProseMirrorPlugins(name, { remove: hasButton });
+
+    /**
+     * Handle legacy data references.
+     * @deprecated since v10
+     */
+    const isDocument = this.object instanceof foundry.abstract.Document;
+    const data = name?.startsWith('data.') && isDocument ? this.object.data : this.object;
+
+    // Define the editor configuration
+    const editor = (this.editors[name] = {
+      options,
+      target: name,
+      button: button,
+      hasButton: hasButton,
+      mce: null,
+      instance: null,
+      active: !hasButton,
+      changed: false,
+      initial: foundry.utils.getProperty(data, name),
+    });
+
+    // Activate the editor immediately, or upon button click
+    const activate = () => {
+      // <- Custom code, everything above is untouched
+      if (name.startsWith('pages.')) {
+        const split = name.split('.');
+        const pageId = split[1];
+        const prop = split.slice(2).join('.');
+        editor.initial = foundry.utils.getProperty(data.pages.get(pageId), prop);
+      } else {
+        editor.initial = foundry.utils.getProperty(data, name);
+      }
+      // -> End custom code
+      this.activateEditor(name, {}, editor.initial);
+    };
+    if (hasButton) button.onclick = activate;
+    else activate();
+  }
+
+  /**
    * Handles the form update
    * @param event
    * @param formData
@@ -163,12 +236,15 @@ export class ImprovedJournalSheet extends JournalSheet {
 
     // Check for formData with name equals to page ids, collecting the contents for updating
     const pagesUpdateData = [];
-    const pageIds = this._pages.map((p) => p._id);
     for (const k of Object.keys(formData)) {
-      if (!pageIds.includes(k)) continue;
+      if (!k.startsWith('pages.')) continue;
+      const split = k.split('.');
+      const pageId = split[1];
+      const prop = split.slice(2).join('.');
+
       pagesUpdateData.push({
-        _id: k,
-        'text.content': formData[k],
+        _id: pageId,
+        [prop]: formData[k],
       });
       delete formData[k];
     }

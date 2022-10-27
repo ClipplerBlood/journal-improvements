@@ -41,6 +41,9 @@
   .tox {
     height: 624px !important;
   }
+  &.prosemirror {
+    min-height: 300px;
+  }
 }
 
 // Input page name

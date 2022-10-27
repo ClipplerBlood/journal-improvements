@@ -1,9 +1,23 @@
 <header class="journal-page-header">
   <h1>{{title}}</h1>
 </header>
-{{editor
-  enrichedPageContent
-  target=data._id
-  button=editable
-  editable=editable
-}}
+
+{{#if (eq engine "markdown")}}
+  <!--  TODO: Markdown -->
+  <input type="hidden" name="text.format" value="2" data-dtype="Number">
+  <textarea class="markdown-editor" name="data._id" autofocus>
+    {{~data.text.markdown~}}
+  </textarea>
+
+{{else}}
+  {{editor
+    editor.content
+    target=(concat "pages." data._id ".text.content")
+    button=editable
+    editable=editable
+    engine=engine
+    class="journal-page-content"
+    collaborate=editor.collaborate
+  }}
+{{/if}}
+

@@ -11,6 +11,23 @@ export function registerSettings() {
     requiresReload: false,
     type: Boolean,
     default: 'true',
+    onChange: refreshJournals,
+  });
+
+  game.settings.register('journal-improvements', 'editorEngine', {
+    name: 'journalImprovements.settings.editorEngineName',
+    hint: 'journalImprovements.settings.editorEngineHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: String,
+    default: 'prosemirror',
+    choices: {
+      tinymce: 'TinyMCE',
+      prosemirror: 'ProseMirror',
+      // markdown: 'Markdown', //TODO
+    },
+    onChange: refreshJournals,
   });
 
   game.settings.register('journal-improvements', 'createDefaultPage', {
@@ -21,6 +38,7 @@ export function registerSettings() {
     requiresReload: false,
     type: Boolean,
     default: false,
+    onChange: refreshJournals,
   });
 
   game.settings.register('journal-improvements', 'createSilent', {
@@ -31,6 +49,7 @@ export function registerSettings() {
     requiresReload: false,
     type: Boolean,
     default: false,
+    onChange: refreshJournals,
   });
 
   game.settings.register('journal-improvements', 'pinIcons', {
@@ -51,6 +70,7 @@ export function registerSettings() {
     requiresReload: false,
     type: Boolean,
     default: false,
+    onChange: refreshJournals,
   });
 
   game.settings.register('journal-improvements', 'uploadFolder', {
@@ -72,6 +92,7 @@ export function registerSettings() {
       requiresReload: false,
       type: Boolean,
       default: false,
+      onChange: refreshJournals,
     });
   }
 }
@@ -95,4 +116,10 @@ const noteIcons = {
 
 export function getNoteIcon(type) {
   return noteIcons[type];
+}
+
+function refreshJournals() {
+  Object.values(ui.windows)
+    .filter((w) => w instanceof JournalSheet)
+    .forEach((w) => w.render());
 }
