@@ -132,6 +132,23 @@ export class ImprovedJournalSheet extends JournalSheet {
     const articlePage = ct.closest('article');
     const isText = articlePage.hasClass('text');
     if (!isText) return super._onEditPage(event);
+
+    // Replace the h1 with an input
+    const headerH1 = articlePage.find('header h1');
+    const pageId = articlePage.data('pageId');
+    const pageName = headerH1.text();
+    const nameInput = $(`<input type='text' value="${pageName}">`);
+    const that = this;
+    nameInput.on('change', async function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const newPageName = $(this).val();
+      await that.document.updateEmbeddedDocuments('JournalEntryPage', [{ _id: pageId, name: newPageName }], {
+        render: false,
+      });
+      // TODO: Update TOC manually, since we don't render the sheet after update
+    });
+    headerH1.replaceWith(nameInput);
   }
 
   /**
