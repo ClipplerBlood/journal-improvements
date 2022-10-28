@@ -50,10 +50,10 @@
   }
 
   .tox {
-    height: 624px !important;
+    height: var(--ji-editor-height, 625px) !important;
   }
   &.prosemirror {
-    min-height: 620px;
+    min-height: var(--ji-editor-height, 625px);
   }
 }
 
@@ -67,7 +67,7 @@
 
 // Markdown editor
 .sheet.journal-improvements article textarea.markdown-editor {
-  min-height: 610px;
+  min-height: calc(var(--ji-editor-height, 625px) - 8px);
   padding: 8px;
   font-family: 'JetBrains Mono Regular', 'Roboto Mono', 'Courier New', monospace;
   font-size: var(--font-size-15);

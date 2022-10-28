@@ -1,4 +1,4 @@
-import { getNoteIcon, registerSettings } from './settings.js';
+import { getNoteIcon, registerSettings, setEditorHeight } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
 import { ImprovedJournalSheet } from './journal/journalSheet.js';
 import { ImprovedJournalEntry } from './journal/journalEntry.js';
@@ -42,7 +42,9 @@ Hooks.once('init', async () => {
 
 Hooks.once('setup', async () => {});
 
-Hooks.once('ready', async () => {});
+Hooks.once('ready', async () => {
+  setEditorHeight();
+});
 
 Hooks.on('renderNoteConfig', async (app, element, data) => {
   // TODO: fix commented lines

@@ -83,6 +83,17 @@ export function registerSettings() {
     default: 'uploads/journal',
   });
 
+  game.settings.register('journal-improvements', 'editorHeight', {
+    name: 'journalImprovements.settings.editorHeightName',
+    hint: 'journalImprovements.settings.editorHeightHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Number,
+    default: 610,
+    onChange: (value) => setEditorHeight(value),
+  });
+
   for (const t of ['Text', 'Image', 'Pdf', 'Video']) {
     game.settings.register('journal-improvements', `hideButton${t}`, {
       name: `journalImprovements.settings.hideButtons.${t}`,
@@ -122,4 +133,10 @@ function refreshJournals() {
   Object.values(ui.windows)
     .filter((w) => w instanceof JournalSheet)
     .forEach((w) => w.render());
+}
+
+export function setEditorHeight(value = undefined) {
+  value = value ?? game.settings.get('journal-improvements', 'editorHeight');
+  const r = document.querySelector(':root');
+  r.style.setProperty('--ji-editor-height', value + 'px');
 }
