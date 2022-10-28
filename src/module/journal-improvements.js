@@ -20,7 +20,7 @@ Hooks.once('init', async () => {
     restricted: true,
     uneditable: [{ key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL] }],
     onDown: () => _onPaste(false),
-    precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+    precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
   });
 
   game.keybindings.register('journal-improvements', 'pastePlain', {
@@ -30,7 +30,7 @@ Hooks.once('init', async () => {
       { key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL, KeyboardManager.MODIFIER_KEYS.SHIFT] },
     ],
     onDown: () => _onPaste(true),
-    precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+    precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
   });
 
   // Register custom module settings
