@@ -10,7 +10,7 @@ export function registerSettings() {
     config: true,
     requiresReload: false,
     type: Boolean,
-    default: 'true',
+    default: true,
     onChange: refreshJournals,
   });
 
@@ -27,6 +27,17 @@ export function registerSettings() {
       prosemirror: 'ProseMirror',
       markdown: 'Markdown',
     },
+    onChange: refreshJournals,
+  });
+
+  game.settings.register('journal-improvements', 'autosave', {
+    name: 'journalImprovements.settings.autosaveName',
+    hint: 'journalImprovements.settings.autosaveHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: true,
     onChange: refreshJournals,
   });
 

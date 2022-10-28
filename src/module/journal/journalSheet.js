@@ -9,6 +9,7 @@ export class ImprovedJournalSheet extends JournalSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: classes,
       template: 'modules/journal-improvements/templates/journal-sheet.html',
+      submitOnClose: game.settings.get('journal-improvements', 'autosave'),
     });
   }
 
@@ -22,6 +23,10 @@ export class ImprovedJournalSheet extends JournalSheet {
 
   get jiEngine() {
     return game.settings.get('journal-improvements', 'editorEngine') ?? 'tinymce';
+  }
+
+  get jiAutosave() {
+    return game.settings.get('journal-improvements', 'autosave');
   }
 
   getData(options) {
@@ -103,7 +108,9 @@ export class ImprovedJournalSheet extends JournalSheet {
         pageNode.replaceChildren(...view.get());
         sheet._activateCoreListeners(view.parent());
         // sheet.activateListeners(view);
-        view.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
+        const editorContent = view.find('.editor-content[data-edit]');
+        editorContent.each((i, div) => this._activateEditor(div));
+        if (this.jiAutosave) editorContent.on('focusout', this.submit({ preventRender: true }));
 
         // Build the toc
         sheet.toc = JournalEntryPage.implementation.buildTOC(view.get());
@@ -111,6 +118,10 @@ export class ImprovedJournalSheet extends JournalSheet {
         // If is markdown, add custom dropping of links
         if (data.engine === 'markdown') {
           sheet._onDropContentLink = (eventData) => this._markdownEditor_onDropContentLink(eventData, view);
+          if (this.jiAutosave)
+            view
+              .find('textarea.markdown-editor')
+              .on('focusout', (event) => this._saveMarkdownFromEditor($(event.currentTarget).parent(), true));
         }
       }
 
@@ -231,9 +242,10 @@ export class ImprovedJournalSheet extends JournalSheet {
   /**
    * Saves the markdown to the page, converting it to html and triggering a rendering
    * @param markDownEditor
+   * @param preventPostUpdateRender
    * @private
    */
-  _saveMarkdownFromEditor(markDownEditor) {
+  _saveMarkdownFromEditor(markDownEditor, preventPostUpdateRender = false) {
     const mdTextarea = markDownEditor.find('textarea.markdown-editor');
     if (!mdTextarea) throw 'Markdown editor not found';
     const k = mdTextarea.attr('name');
@@ -247,7 +259,9 @@ export class ImprovedJournalSheet extends JournalSheet {
       .updateEmbeddedDocuments('JournalEntryPage', [{ _id: pageId, 'text.markdown': md, 'text.content': html }], {
         render: false,
       })
-      .then(() => this.render());
+      .then(() => {
+        if (!preventPostUpdateRender) this.render();
+      });
   }
 
   /**

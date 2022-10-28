@@ -2,6 +2,8 @@
   "journalImprovements": {
     "sheetName": "Improved Journal Sheet",
     "settings": {
+      "autosaveName": "Autosave",
+      "autosaveHint": "Automatically save the edited content when closing the journal or when the cursor leaves the editor.",
       "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",
       "createDefaultPageName": "Default Page",
       "createSilentPageHint": "When a page is created, skip opening the edit dialog.",
