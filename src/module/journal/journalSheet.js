@@ -1,5 +1,6 @@
 import { getHiddenButtons } from '../settings.js';
 
+/* globals JournalTextPageSheet JournalTextTinyMCESheet MarkdownJournalPageSheet JournalEntryPage*/
 export class ImprovedJournalSheet extends JournalSheet {
   static get defaultOptions() {
     const classes = ['sheet', 'journal-sheet', 'journal-entry', 'journal-improvements'];
@@ -104,6 +105,9 @@ export class ImprovedJournalSheet extends JournalSheet {
         // sheet.activateListeners(view);
         view.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
 
+        // Build the toc
+        sheet.toc = JournalEntryPage.implementation.buildTOC(view.get());
+
         // If is markdown, add custom dropping of links
         if (data.engine === 'markdown') {
           sheet._onDropContentLink = (eventData) => this._markdownEditor_onDropContentLink(eventData, view);
@@ -135,12 +139,43 @@ export class ImprovedJournalSheet extends JournalSheet {
    * @returns {JournalPageSheet}
    */
   getPageSheet(pageId) {
-    if (this._isDefaultEdit && this.jiEngine !== 'markdown') return super.getPageSheet(pageId);
     const page = this.object.pages.get(pageId);
+    if (this._isDefaultEdit || page.type !== 'text') return super.getPageSheet(pageId);
+
     const privateSheets = this['#sheets'] ?? {};
-    // eslint-disable-next-line no-undef
-    const mdJournalPageSheet = new MarkdownJournalPageSheet(page, { editable: false });
-    return (privateSheets[pageId] ??= mdJournalPageSheet);
+    switch (this.jiEngine) {
+      case 'prosemirror':
+        return (privateSheets[pageId] ??= new JournalTextPageSheet(page, { editable: false }));
+      case 'tinymce':
+        return (privateSheets[pageId] ??= new JournalTextTinyMCESheet(page, { editable: false }));
+      case 'markdown':
+        return (privateSheets[pageId] ??= new MarkdownJournalPageSheet(page, { editable: false }));
+    }
+  }
+
+  /**
+   * Turn to a specific page.
+   * @param {string} pageId    The ID of the page to turn to.
+   * @param {string} [anchor]  Optionally an anchor slug to focus within that page.
+   */
+  goToPage(pageId, anchor) {
+    if (this._isDefaultEdit) return super.goToPage(pageId, anchor);
+
+    if (this.mode === this.constructor.VIEW_MODES.SINGLE) {
+      const currentPageId = this._pages[this.pageIndex]?._id;
+      if (currentPageId !== pageId) return this.render(true, { pageId, anchor });
+    }
+    const page = this.element[0].querySelector(`.journal-entry-page[data-page-id="${pageId}"]`);
+    if (anchor) {
+      // <- CUSTOM CODE START
+      const element = this.element[0].querySelector(`.journal-entry-content [data-anchor="${anchor}"]`);
+      // -> CUSTOM CODE END
+      if (element) {
+        element.scrollIntoView();
+        return;
+      }
+    }
+    page?.scrollIntoView();
   }
 
   /**
