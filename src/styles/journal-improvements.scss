@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'JetBrains Mono Regular';
+  src: url('../fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// =============
+
 .sheet.journal-entry article img:not(.nopopout) {
   // Hide empty images
   &:not([src]),
@@ -52,6 +62,18 @@
   font-size: var(--font-size-28);
   height: var(--font-size-34);
   margin-bottom: 8px;
+}
+
+// Markdown editor
+.sheet.journal-improvements article textarea.markdown-editor {
+  min-height: 610px;
+  padding: 8px;
+  font-family: 'JetBrains Mono Regular', 'Roboto Mono', 'Courier New', monospace;
+  font-size: var(--font-size-15);
+}
+
+.sheet.journal-improvements article .markdown-editor .editor-edit {
+  position: absolute;
 }
 
 // ============================

@@ -4,10 +4,20 @@
 
 {{#if (eq engine "markdown")}}
   <!--  TODO: Markdown -->
-  <input type="hidden" name="text.format" value="2" data-dtype="Number">
-  <textarea class="markdown-editor" name="data._id" autofocus>
-    {{~data.text.markdown~}}
-  </textarea>
+  <div class="markdown-editor">
+    <a class="editor-edit"><i class="fas fa-edit"></i></a>
+    <div class="enriched-content">
+      {{{editor.content}}}
+    </div>
+    <div class="markdown-editor-content" style="display: none">
+      <input type="hidden" name="{{concat "pages." data._id ".text.format"}}" value="2" data-dtype="Number">
+      <textarea class="markdown-editor" name="{{concat "pages." data._id ".text.markdown"}}" spellcheck="false" autofocus>
+        {{~data.text.markdown~}}
+      </textarea>
+    </div>
+
+  </div>
+
 
 {{else}}
   {{editor

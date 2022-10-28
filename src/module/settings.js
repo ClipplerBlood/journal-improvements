@@ -25,7 +25,7 @@ export function registerSettings() {
     choices: {
       tinymce: 'TinyMCE',
       prosemirror: 'ProseMirror',
-      // markdown: 'Markdown', //TODO
+      markdown: 'Markdown',
     },
     onChange: refreshJournals,
   });

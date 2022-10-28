@@ -19,6 +19,10 @@ export class ImprovedJournalSheet extends JournalSheet {
     return !game.settings.get('journal-improvements', 'integratedEditor');
   }
 
+  get jiEngine() {
+    return game.settings.get('journal-improvements', 'editorEngine') ?? 'tinymce';
+  }
+
   getData(options) {
     const data = super.getData(options);
     data.hiddenButtons = getHiddenButtons();
@@ -75,7 +79,6 @@ export class ImprovedJournalSheet extends JournalSheet {
    */
   async _renderPageViews() {
     if (this._isDefaultEdit) return super._renderPageViews();
-    const engine = game.settings.get('journal-improvements', 'editorEngine') ?? 'tinymce';
 
     for (const pageNode of this.element[0].querySelectorAll('.journal-entry-page')) {
       const id = pageNode.dataset.pageId;
@@ -83,7 +86,7 @@ export class ImprovedJournalSheet extends JournalSheet {
       const sheet = this.getPageSheet(id);
       const data = await sheet.getData();
 
-      /* Begin custom code */
+      /* <- Begin custom code */
       let view, edit;
       const isText = data.data.type === 'text';
       edit = pageNode.querySelector(':scope > .edit-container');
@@ -91,7 +94,7 @@ export class ImprovedJournalSheet extends JournalSheet {
       // If is text page, render the editor in this sheet
       if (isText) {
         data.editable = edit != null;
-        data.engine = engine;
+        data.engine = this.jiEngine;
         // data.enrichedPageContent = await TextEditor.enrichHTML(data.data?.text?.content, { async: true });
         view = await renderTemplate('modules/journal-improvements/templates/journal-sheet-text-page.html', data);
         view = $(view); // to Jquery
@@ -100,6 +103,11 @@ export class ImprovedJournalSheet extends JournalSheet {
         sheet._activateCoreListeners(view.parent());
         // sheet.activateListeners(view);
         view.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
+
+        // If is markdown, add custom dropping of links
+        if (data.engine === 'markdown') {
+          sheet._onDropContentLink = (eventData) => this._markdownEditor_onDropContentLink(eventData, view);
+        }
       }
 
       // Otherwise, default behavior
@@ -110,7 +118,7 @@ export class ImprovedJournalSheet extends JournalSheet {
         sheet._activateCoreListeners(view.parent());
         sheet.activateListeners(view);
       }
-      /* End custom code */
+      /* -> End custom code */
 
       await this._renderHeadings(pageNode, sheet.toc);
       for (const cls of sheet.constructor._getInheritanceChain()) {
@@ -118,6 +126,21 @@ export class ImprovedJournalSheet extends JournalSheet {
       }
     }
     this._observeHeadings();
+  }
+
+  /**
+   * Retrieve the sheet instance for rendering this page inline.
+   * Custom code to handle Markdown conversion easily, by instancing the page sheet as a MarkdownJournalPageSheet
+   * @param {string} pageId  The ID of the page.
+   * @returns {JournalPageSheet}
+   */
+  getPageSheet(pageId) {
+    if (this._isDefaultEdit && this.jiEngine !== 'markdown') return super.getPageSheet(pageId);
+    const page = this.object.pages.get(pageId);
+    const privateSheets = this['#sheets'] ?? {};
+    // eslint-disable-next-line no-undef
+    const mdJournalPageSheet = new MarkdownJournalPageSheet(page, { editable: false });
+    return (privateSheets[pageId] ??= mdJournalPageSheet);
   }
 
   /**
@@ -151,6 +174,45 @@ export class ImprovedJournalSheet extends JournalSheet {
       // TODO: Update TOC manually, since we don't render the sheet after update
     });
     headerH1.replaceWith(nameInput);
+
+    // If markdown, toggle between the markdown and the enriched content view, saving the markdown
+    if (this.jiEngine === 'markdown') {
+      const enrichedContent = articlePage.find('.enriched-content');
+      const markdownEditorContent = articlePage.find('.markdown-editor-content');
+
+      // If the md editor is currently displayed, then we can update the data and trigger a render
+      if (markdownEditorContent.is(':visible')) {
+        this._saveMarkdownFromEditor(markdownEditorContent);
+      }
+
+      // Otherwise display the editor and hide the enriched
+      else {
+        enrichedContent.hide();
+        markdownEditorContent.show();
+      }
+    }
+  }
+
+  /**
+   * Saves the markdown to the page, converting it to html and triggering a rendering
+   * @param markDownEditor
+   * @private
+   */
+  _saveMarkdownFromEditor(markDownEditor) {
+    const mdTextarea = markDownEditor.find('textarea.markdown-editor');
+    if (!mdTextarea) throw 'Markdown editor not found';
+    const k = mdTextarea.attr('name');
+    const md = mdTextarea.val();
+    // eslint-disable-next-line no-undef
+    const html = JournalTextPageSheet._converter.makeHtml(md);
+    const split = k.split('.');
+    const pageId = split[1];
+
+    this.document
+      .updateEmbeddedDocuments('JournalEntryPage', [{ _id: pageId, 'text.markdown': md, 'text.content': html }], {
+        render: false,
+      })
+      .then(() => this.render());
   }
 
   /**
@@ -256,5 +318,20 @@ export class ImprovedJournalSheet extends JournalSheet {
 
     // const pageIds = this.pages;
     return super._updateObject(event, formData);
+  }
+
+  /**
+   * Handles the dropping of content links in integrated markdown editors
+   * @param eventData
+   * @param pageView
+   * @return {Promise<void>}
+   * @private
+   */
+  async _markdownEditor_onDropContentLink(eventData, pageView) {
+    const link = await TextEditor.getContentLink(eventData, { relativeTo: this.object });
+    if (!link) return;
+    const editor = pageView.find('textarea.markdown-editor').get(0);
+    const content = editor.value;
+    editor.value = content.substring(0, editor.selectionStart) + link + content.substring(editor.selectionStart);
   }
 }
