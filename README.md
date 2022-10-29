@@ -1,90 +1,28 @@
-<!--
-SPDX-FileCopyrightText: 2022 Johannes Loher
+<h1 align="center">Journal Improvements</h1>
+<hr>
 
-SPDX-License-Identifier: MIT
--->
+Foundry introduced a new journal interface and editor in V10. It improved the organization of text and image pages into singular journals and introduced fast and collaborative editor. This mod introduces quality of life improvements and new functionality to the new Foundry Journals that build upon the new architecture and introduces new features.
 
-# journal-improvements
+## Features
+All functionalities marked with [Setting] can be turned on and off in the module settings.
 
-Please add your description here.
+### New Functionality
+- [Setting] You can now open the **editor right into the Journal** interface without opening a separate page dialog
+- You can now use **Markdown** in the editor (what is [Markdown](https://www.markdownguide.org/getting-started/)?)
+- [Setting] You can change the integrated editor engine from ProseMirror to TinyMCE (Foundry VTT editor of version V9 and before) or use simple Makrdown
+- You can use **CTRL+V** to paste images and formatted text from the clipboard right into the Journal without creating a separate page first and even without using the editor. You can use SHIFT+CTRL+V to paste text in plain format, ignoring its formatting. Images are uploaded in a directory set in the Settings, and you can choose whether to use the Foundry VTT new image pages or paste images into text pages where you can mix images with text.
+- [Setting] If using the integrated editor, you can enable **auto-saving**. When the sheet is closed or the cursor leaves the editor, the page contents are automatically saved.
 
-## Installation
 
-Please add your installation instructions here.
+### New Interface Improvements
+- The index of pages in the left sidebar now properly starts from 1 instead of 0
+- [Setting] When creating a new journal, it can start with already available text page for you to start writing. The name of the page is inherited by the journal, but can be changed later.
+- [Setting] The **Add Page button** that opens a dialogue asking for name and type of page is now simplified to a list of buttons with content icons. This simplifies creating a new page of specific type of content to one click instead of four.
+- [Setting] If using the new Add Page buttons, you can remove the content types you never use making the selection of buttons smaller.
+- [Setting] If using the new Add Page buttons, you can fully skip the dialog asking for name of the page. New pages can be created with a default name that can be edited later.
 
-## Development
 
-### Prerequisites
-
-In order to build this module, recent versions of `node` and `npm` are
-required. Most likely, using `yarn` also works, but only `npm` is officially
-supported. We recommend using the latest lts version of `node`. If you use `nvm`
-to manage your `node` versions, you can simply run
-
-```
-nvm install
-```
-
-in the project's root directory.
-
-You also need to install the project's dependencies. To do so, run
-
-```
-npm install
-```
-
-### Building
-
-You can build the project by running
-
-```
-npm run build
-```
-
-Alternatively, you can run
-
-```
-npm run build:watch
-```
-
-to watch for changes and automatically build as necessary.
-
-### Linking the built project to Foundry VTT
-
-In order to provide a fluent development experience, it is recommended to link
-the built module to your local Foundry VTT installation's data folder. In
-order to do so, first add a file called `foundryconfig.json` to the project root
-with the following content:
-
-```
-{
-  "dataPath": ["/absolute/path/to/your/FoundryVTT"]
-}
-```
-
-(if you are using Windows, make sure to use `\` as a path separator instead of
-`/`)
-
-Then run
-
-```
-npm run link-project
-```
-
-On Windows, creating symlinks requires administrator privileges, so
-unfortunately you need to run the above command in an administrator terminal for
-it to work.
-
-You can also link to multiple data folders by specifying multiple paths in the
-`dataPath` array.
-
-### Creating a release
-
-The workflow works basically the same as the workflow of the [League Basic JS Module Template], please follow the
-instructions given there.
-
-## Licensing
-
+## License
 This project is being developed under the terms of the
 [LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT] for Foundry Virtual Tabletop.
 
