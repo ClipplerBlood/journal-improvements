@@ -54,6 +54,14 @@
   }
   &.prosemirror {
     min-height: var(--ji-editor-height, 625px);
+
+    .editor-container {
+      margin: 0.5rem 0;
+
+      .editor-content {
+        padding: 0;
+      }
+    }
   }
 }
 

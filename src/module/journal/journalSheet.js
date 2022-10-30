@@ -236,10 +236,11 @@ export class ImprovedJournalSheet extends JournalSheet {
         this._saveMarkdownFromEditor(markdownEditorContent);
       }
 
-      // Otherwise display the editor and hide the enriched
+      // Otherwise display the editor and hide the enriched (+ set the height)
       else {
         enrichedContent.hide();
         markdownEditorContent.show();
+        this.autosetEditorHeight();
       }
     }
   }
@@ -323,7 +324,7 @@ export class ImprovedJournalSheet extends JournalSheet {
     });
 
     // Activate the editor immediately, or upon button click
-    const activate = () => {
+    const activate = async () => {
       // <- Custom code, everything above is untouched
       if (name.startsWith('pages.')) {
         const split = name.split('.');
@@ -334,7 +335,8 @@ export class ImprovedJournalSheet extends JournalSheet {
         editor.initial = foundry.utils.getProperty(data, name);
       }
       // -> End custom code
-      this.activateEditor(name, {}, editor.initial);
+      await this.activateEditor(name, {}, editor.initial);
+      this.autosetEditorHeight();
     };
     if (hasButton) button.onclick = activate;
     else activate();
@@ -387,5 +389,29 @@ export class ImprovedJournalSheet extends JournalSheet {
     const editor = pageView.find('textarea.markdown-editor').get(0);
     const content = editor.value;
     editor.value = content.substring(0, editor.selectionStart) + link + content.substring(editor.selectionStart);
+  }
+
+  /**
+   * Automatically sets the editor height to properly fit the application
+   * Currently works only on single view mode
+   */
+  autosetEditorHeight() {
+    const article = this.element.find('article');
+    const scrollable = this.element.find('.journal-entry-content .scrollable');
+    if (this.mode === this.constructor.VIEW_MODES.SINGLE) {
+      const editor = article.find('.editor, textarea.markdown-editor');
+      if (!editor?.length) return;
+      const scrollableBRect = scrollable.get(0).getBoundingClientRect();
+      const editorBRect = editor.get(0).getBoundingClientRect();
+
+      let h = scrollableBRect.height - (editorBRect.top - scrollableBRect.top);
+      if (editor.hasClass('markdown-editor')) h -= 8;
+      editor.css('min-height', h + 'px');
+    }
+  }
+
+  setPosition({ left, top, width, height, scale } = {}) {
+    super.setPosition({ left, top, width, height, scale });
+    this.autosetEditorHeight();
   }
 }
