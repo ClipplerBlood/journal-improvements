@@ -104,18 +104,21 @@ export class ImprovedJournalSheet extends JournalSheet {
         // data.enrichedPageContent = await TextEditor.enrichHTML(data.data?.text?.content, { async: true });
         view = await renderTemplate('modules/journal-improvements/templates/journal-sheet-text-page.html', data);
         view = $(view); // to Jquery
-
         pageNode.replaceChildren(...view.get());
         sheet._activateCoreListeners(view.parent());
         // sheet.activateListeners(view);
-        const editorContent = view.find('.editor-content[data-edit]');
-        editorContent.each((i, div) => this._activateEditor(div));
-        if (this.jiAutosave) editorContent.on('focusout', this.submit({ preventRender: true }));
+
+        // If the page is editable, activate the editors
+        if (data.editable) {
+          const editorContent = view.find('.editor-content[data-edit]');
+          editorContent.each((i, div) => this._activateEditor(div));
+          if (this.jiAutosave) editorContent.on('focusout', this.submit({ preventRender: true }));
+        }
 
         // Build the toc
         sheet.toc = JournalEntryPage.implementation.buildTOC(view.find('.editor-content').get());
 
-        // If is markdown, add custom dropping of links
+        // If is markdown, add custom dropping of links and autosave
         if (data.engine === 'markdown') {
           sheet._onDropContentLink = (eventData) => this._markdownEditor_onDropContentLink(eventData, view);
           if (this.jiAutosave)
@@ -217,7 +220,9 @@ export class ImprovedJournalSheet extends JournalSheet {
       await that.document.updateEmbeddedDocuments('JournalEntryPage', [{ _id: pageId, name: newPageName }], {
         render: false,
       });
-      // TODO: Update TOC manually, since we don't render the sheet after update
+
+      // Change the first level TOC for the page
+      that.element.find(`nav.pages-list [data-page-id="${pageId}"] .page-title`)?.text(newPageName);
     });
     headerH1.replaceWith(nameInput);
 
