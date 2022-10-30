@@ -113,7 +113,7 @@ export class ImprovedJournalSheet extends JournalSheet {
         if (this.jiAutosave) editorContent.on('focusout', this.submit({ preventRender: true }));
 
         // Build the toc
-        sheet.toc = JournalEntryPage.implementation.buildTOC(view.get());
+        sheet.toc = JournalEntryPage.implementation.buildTOC(view.find('.editor-content').get());
 
         // If is markdown, add custom dropping of links
         if (data.engine === 'markdown') {
