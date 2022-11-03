@@ -30,7 +30,7 @@ All functionalities marked with [Setting] can be turned on and off in the module
 This project is being developed under the terms of the
 [LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT](https://foundryvtt.com/article/license) for Foundry Virtual Tabletop and the [MIT](https://raw.githubusercontent.com/ClipplerBlood/journal-improvements/master/LICENSE) license.
 
-## Acknowledgement and support
+## Acknowledgements and support
 Huge thanks to ApoApostolov#4622 for the original idea and for supporting the development!
 
 If you find this module useful consider buying a coffee to support its development :D
