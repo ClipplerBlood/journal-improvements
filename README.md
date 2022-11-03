@@ -1,7 +1,9 @@
-<h1 align="center">Journal Improvements</h1>
+<p align="center">
+<img src="https://raw.githubusercontent.com/ClipplerBlood/journal-improvements/master/.github/img/journal-improvements-logo.png" align="center">
+</p>
 <hr>
 
-Foundry introduced a new journal interface and editor in V10. It improved the organization of text and image pages into singular journals and introduced fast and collaborative editor. This mod introduces quality of life improvements and new functionality to the new Foundry Journals that build upon the new architecture and introduces new features.
+Foundry introduced a new journal interface and editor in V10. It improved the organization of text and image pages into singular journals and introduced fast and collaborative editor. This module introduces quality of life improvements and new functionality to the new Foundry Journals that build upon the new architecture and introduces new features.
 
 ## Features
 All functionalities marked with [Setting] can be turned on and off in the module settings.
