@@ -5,6 +5,8 @@
 
 Foundry introduced a new journal interface and editor in V10. It improved the organization of text and image pages into singular journals and introduced fast and collaborative editor. This module introduces quality of life improvements and new functionality to the new Foundry Journals that build upon the new architecture and introduces new features.
 
+<p align="center"><a href="https://ko-fi.com/L4L0FGLLH"><img src="https://ko-fi.com/img/githubbutton_sm.svg" /></a></p>
+
 ## Features
 All functionalities marked with [Setting] can be turned on and off in the module settings.
 
@@ -27,3 +29,9 @@ All functionalities marked with [Setting] can be turned on and off in the module
 ## License
 This project is being developed under the terms of the
 [LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT](https://foundryvtt.com/article/license) for Foundry Virtual Tabletop and the [MIT](https://raw.githubusercontent.com/ClipplerBlood/journal-improvements/master/LICENSE) license.
+
+## Acknowledgement and support
+Huge thanks to ApoApostolov#4622 for the original idea and for supporting the development!
+
+If you find this module useful consider buying a coffee to support its development :D
+
