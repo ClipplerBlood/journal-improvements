@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/ClipplerBlood/journal-improvements/master/.github/img/journal-improvements-logo.png" align="center">
 </p>
-<hr>
+
 
 Foundry introduced a new journal interface and editor in V10. It improved the organization of text and image pages into singular journals and introduced fast and collaborative editor. This module introduces quality of life improvements and new functionality to the new Foundry Journals that build upon the new architecture and introduces new features.
 
@@ -10,7 +10,7 @@ All functionalities marked with [Setting] can be turned on and off in the module
 
 ### New Functionality
 - [Setting] You can now open the **editor right into the Journal** interface without opening a separate page dialog
-- You can now use **Markdown** in the editor (what is [Markdown](https://www.markdownguide.org/getting-started/)?)
+- You can now use **Markdown** in the editor ([what is Markdown](https://www.markdownguide.org/getting-started/)?)
 - [Setting] You can change the integrated editor engine from ProseMirror to TinyMCE (Foundry VTT editor of version V9 and before) or use simple Makrdown
 - You can use **CTRL+V** to paste images and formatted text from the clipboard right into the Journal without creating a separate page first and even without using the editor. You can use SHIFT+CTRL+V to paste text in plain format, ignoring its formatting. Images are uploaded in a directory set in the Settings, and you can choose whether to use the Foundry VTT new image pages or paste images into text pages where you can mix images with text.
 - [Setting] If using the integrated editor, you can enable **auto-saving**. When the sheet is closed or the cursor leaves the editor, the page contents are automatically saved.
@@ -26,12 +26,4 @@ All functionalities marked with [Setting] can be turned on and off in the module
 
 ## License
 This project is being developed under the terms of the
-[LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT] for Foundry Virtual Tabletop.
-
-Please add your licensing information here. Add your chosen license as
-`LICENSE` file to the project root and mention it here.  If you don't know which
-license to choose, take a look at [Choose an open source license].
-
-[League Basic JS Module Template]: https://github.com/League-of-Foundry-Developers/FoundryVTT-Module-Template
-[LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT]: https://foundryvtt.com/article/license/
-[Choose an open source license]: https://choosealicense.com/
+[LIMITED LICENSE AGREEMENT FOR MODULE DEVELOPMENT](https://foundryvtt.com/article/license) for Foundry Virtual Tabletop and the [MIT](https://raw.githubusercontent.com/ClipplerBlood/journal-improvements/master/LICENSE) license.
