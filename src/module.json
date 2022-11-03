@@ -1,7 +1,7 @@
 {
   "id": "journal-improvements",
   "title": "Journal Improvements",
-  "description": "TODO",
+  "description": "Quality of life improvements and new functionality for Foundry v10 journals!",
   "authors": [
     {
       "name": "ClipplerBlood",
@@ -15,9 +15,9 @@
   ],
   "url": "This is auto replaced",
   "license": "<please choose an appropriate license. https://choosealicense.com/ is a great place to get more information if you are unsure>",
-  "readme": "<optionally the URL to your readme>",
-  "bugs": "<optionally the URL to your issue list>",
-  "changelog": "<optionally the URL to your changelog>",
+  "readme": "https://github.com/ClipplerBlood/journal-improvements/blob/master/README.md",
+  "bugs": "https://github.com/ClipplerBlood/journal-improvements/issues",
+  "changelog": "https://github.com/ClipplerBlood/journal-improvements/blob/master/CHANGELOG.md",
   "version": "This is auto replaced",
   "compatibility": {
     "minimum": "10",
