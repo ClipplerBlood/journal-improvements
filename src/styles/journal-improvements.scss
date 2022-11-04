@@ -104,3 +104,19 @@
     }
   }
 }
+
+.ij-ernies-fix {
+  &.journal-entry .journal-sidebar .action-buttons {
+    .add-page-buttons {
+      margin: 0;
+      height: 32px;
+
+      button {
+        margin: 0 0.25rem !important;
+      }
+    }
+  }
+  a.editor-edit {
+    top: 0 !important;
+  }
+}

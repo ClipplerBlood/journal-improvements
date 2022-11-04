@@ -5,6 +5,10 @@ export class ImprovedJournalSheet extends JournalSheet {
   static get defaultOptions() {
     const classes = ['sheet', 'journal-sheet', 'journal-entry', 'journal-improvements'];
     if (game.modules.get('pf2e-dorako-ui')?.active) classes.push('ij-dorako-fix');
+    if (game.modules.get('ernies-modern-layout')?.active) {
+      classes.push('ij-ernies-fix');
+      if (game.settings.get('ernies-modern-layout', 'compactMode')) classes.push('ij-ernies-fix-compact');
+    }
 
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: classes,
