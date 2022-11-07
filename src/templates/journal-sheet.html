@@ -1,6 +1,12 @@
 <div class="journal-sheet-container">
   {{! Sidebar Container }}
   <aside class="sidebar directory flexcol journal-sidebar {{sidebarClass}}">
+    {{#if moveJournalTitle}}
+      <form class="journal-header">
+        <input class="title" name="name" type="text" value="{{document.name}}"
+               placeholder="{{localize "JOURNAL.EntryTitle"}}" />
+      </form>
+    {{/if}}
 
     {{! Sidebar Search }}
     <header class="directory-header">
@@ -76,13 +82,15 @@
 
   {{! Main Content }}
   <section class="journal-entry-content flexcol">
-    <form class="journal-header">
-      <input class="title" name="name" type="text" value="{{document.name}}"
-             placeholder="{{localize "JOURNAL.EntryTitle"}}" />
-    </form>
+    {{#unless moveJournalTitle}}
+      <form class="journal-header">
+        <input class="title" name="name" type="text" value="{{document.name}}"
+               placeholder="{{localize "JOURNAL.EntryTitle"}}" />
+      </form>
+    {{/unless}}
 
     <div class="journal-entry-pages {{cssClass}}">
-      <div class="scrollable">
+      <div class="scrollable {{#if moveJournalTitle}}ij-move-journal-title{{/if}}">
         {{#each pages as |page|}}
           <article class="journal-entry-page {{page.type}}" data-page-id="{{page._id}}">
             {{#if page.editable}}

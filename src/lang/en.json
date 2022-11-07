@@ -8,6 +8,8 @@
       "createDefaultPageName": "Default Page",
       "createSilentPageHint": "When a page is created, skip opening the edit dialog. Has effect only if Integrated Editor is OFF.",
       "createSilentPageName": "Silent Page Creation",
+      "moveJournalTitleName": "Move Journal Title",
+      "moveJournalTitleHint": "Move the Journal Title input to the top of the sidebar, freeing up space in the page view.",
       "editorEngineHint": "Which editor engine to use in the integrated editor.",
       "editorEngineName": "Integrated Editor Engine",
       "editorHeightHint": "Height of the integrated editor. Reduce this value if you get two scrollbars or increase it if the editor appears too short.",

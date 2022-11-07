@@ -36,6 +36,7 @@ export class ImprovedJournalSheet extends JournalSheet {
   getData(options) {
     const data = super.getData(options);
     data.hiddenButtons = getHiddenButtons();
+    data.moveJournalTitle = game.settings.get('journal-improvements', 'moveJournalTitle');
     return data;
   }
 

@@ -41,6 +41,17 @@ export function registerSettings() {
     onChange: refreshJournals,
   });
 
+  game.settings.register('journal-improvements', 'moveJournalTitle', {
+    name: 'journalImprovements.settings.moveJournalTitleName',
+    hint: 'journalImprovements.settings.moveJournalTitleHint',
+    scope: 'client',
+    config: true,
+    requiresReload: false,
+    type: Boolean,
+    default: true,
+    onChange: refreshJournals,
+  });
+
   game.settings.register('journal-improvements', 'createDefaultPage', {
     name: 'journalImprovements.settings.createDefaultPageName',
     hint: 'journalImprovements.settings.createDefaultPageHint',

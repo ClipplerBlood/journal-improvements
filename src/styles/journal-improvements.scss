@@ -45,6 +45,7 @@
   max-height: none;
   height: 100% !important;
   min-height: 100px;
+
   .editor-edit {
     position: absolute;
   }
@@ -52,6 +53,7 @@
   .tox {
     height: var(--ji-editor-height, 625px) !important;
   }
+
   &.prosemirror {
     min-height: var(--ji-editor-height, 625px);
 
@@ -85,6 +87,31 @@
   position: absolute;
 }
 
+// Journal name input
+.sheet.journal-improvements {
+  .sidebar {
+    .journal-header {
+      margin: 2px 0.4rem 0;
+
+      .title {
+        font-size: var(--font-size-16);
+        height: 32px;
+        color: var(--color-text-dark-1);
+        background: rgba(255, 255, 245, 0.8);
+        font-weight: 700;
+      }
+    }
+  }
+
+  .sidebar.collapsed .journal-header {
+    visibility: hidden;
+  }
+
+  .journal-entry-pages .scrollable.ij-move-journal-title {
+    padding-top: 16px;
+  }
+}
+
 // ============================
 //    EXTERNAL UI INTEGRATION
 // ============================
@@ -116,6 +143,7 @@
       }
     }
   }
+
   a.editor-edit {
     top: 0 !important;
   }
