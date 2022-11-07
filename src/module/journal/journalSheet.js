@@ -74,12 +74,21 @@ export class ImprovedJournalSheet extends JournalSheet {
    */
   async quickCreatePage(type) {
     await this.document.createQuickPage({ type: type });
+    // Render the last page
     await this.renderLastPage();
+    // Activate the editor if using the integrated editor and page is text.
+    // For some reason the render await doesn't wait the rendered page views. TODO: improve here, instead of using timeout
+    if (!this._isDefaultEdit && type === 'text')
+      setTimeout(() => {
+        const editBtn = this.element.find(`a.editor-edit`).last()[0];
+        const clickEvent = new Event('click');
+        editBtn?.dispatchEvent(clickEvent);
+      }, 50);
   }
 
-  renderLastPage() {
+  async renderLastPage() {
     const lastPageIndex = this._pages.length - 1;
-    return this.render(false, { pageIndex: lastPageIndex });
+    return await this.render(false, { pageIndex: lastPageIndex });
   }
 
   /**

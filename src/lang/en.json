@@ -6,7 +6,7 @@
       "autosaveHint": "Automatically save the edited content when closing the journal or when the cursor leaves the editor.",
       "createDefaultPageHint": "After creating a new journal, add a page with the same name in it.",
       "createDefaultPageName": "Default Page",
-      "createSilentPageHint": "When a page is created, skip opening the edit dialog.",
+      "createSilentPageHint": "When a page is created, skip opening the edit dialog. Has effect only if Integrated Editor is OFF.",
       "createSilentPageName": "Silent Page Creation",
       "editorEngineHint": "Which editor engine to use in the integrated editor.",
       "editorEngineName": "Integrated Editor Engine",

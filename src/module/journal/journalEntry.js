@@ -35,7 +35,10 @@ export class ImprovedJournalEntry extends JournalEntry {
   createQuickPage({ name = undefined, type = 'text', data = {}, options = {} }) {
     if (name == null) name ??= i18n(`journalImprovements.defaultPageNames.${type}`);
     options.parent ??= this;
-    options.renderSheet ??= !game.settings.get('journal-improvements', 'createSilent');
+    options.renderSheet ??= !(
+      game.settings.get('journal-improvements', 'createSilent') ||
+      game.settings.get('journal-improvements', 'integratedEditor')
+    );
     data = mergeObject(data, { name, type });
     const lastSort = this.pages.reduce((acc, page) => Math.max(acc, page.sort), 0);
     data.sort ??= (lastSort ?? 0) + CONST.SORT_INTEGER_DENSITY;
