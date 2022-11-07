@@ -129,7 +129,12 @@ export class ImprovedJournalSheet extends JournalSheet {
         }
 
         // Build the toc
-        sheet.toc = JournalEntryPage.implementation.buildTOC(view.find('.editor-content').get());
+        // For some reason, pf2e gets duplicated 1st level heading, but other systems don't
+        if (game.system.id === 'pf2e') {
+          sheet.toc = JournalEntryPage.buildTOC(view.find('.editor-content').get());
+        } else {
+          sheet.toc = JournalEntryPage.buildTOC(view.get());
+        }
 
         // If is markdown, add custom dropping of links and autosave
         if (data.engine === 'markdown') {
