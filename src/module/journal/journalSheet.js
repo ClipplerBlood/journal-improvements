@@ -78,18 +78,21 @@ export class ImprovedJournalSheet extends JournalSheet {
     // Render the last page
     await this.renderLastPage();
     // Activate the editor if using the integrated editor and page is text.
-    // For some reason the render await doesn't wait the rendered page views. TODO: improve here, instead of using timeout
-    if (!this._isDefaultEdit && type === 'text')
-      setTimeout(() => {
-        const editBtn = this.element.find(`a.editor-edit`).last()[0];
-        const clickEvent = new Event('click');
-        editBtn?.dispatchEvent(clickEvent);
-      }, 50);
+    if (!this._isDefaultEdit && type === 'text') this.dispatchEditorEditClick();
   }
 
   async renderLastPage() {
     const lastPageIndex = this._pages.length - 1;
     return await this.render(false, { pageIndex: lastPageIndex });
+  }
+
+  async dispatchEditorEditClick(timeout = 50) {
+    // For some reason the render await doesn't wait the rendered page views. TODO: improve here, instead of using timeout
+    return setTimeout(() => {
+      const editBtn = this.element.find(`a.editor-edit`).last()[0];
+      const clickEvent = new Event('click');
+      editBtn?.dispatchEvent(clickEvent);
+    }, timeout);
   }
 
   /**
@@ -126,7 +129,7 @@ export class ImprovedJournalSheet extends JournalSheet {
         if (data.editable) {
           const editorContent = view.find('.editor-content[data-edit]');
           editorContent.each((i, div) => this._activateEditor(div));
-          if (this.jiAutosave) editorContent.on('focusout', this.submit({ preventRender: true }));
+          if (this.jiAutosave) editorContent.on('focusout', (event) => this._onEditorFocusout(event));
         }
 
         // Build the toc
@@ -359,6 +362,10 @@ export class ImprovedJournalSheet extends JournalSheet {
     };
     if (hasButton) button.onclick = activate;
     else activate();
+  }
+
+  _onEditorFocusout(event) {
+    this._onSubmit(event);
   }
 
   /**
