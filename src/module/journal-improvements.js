@@ -18,7 +18,7 @@ Hooks.once('init', async () => {
   game.keybindings.register('journal-improvements', 'paste', {
     name: 'journalImprovements.keybindings.paste',
     restricted: true,
-    uneditable: [{ key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL] }],
+    editable: [{ key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL] }],
     onDown: () => _onPaste(false),
     precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
   });
@@ -26,7 +26,7 @@ Hooks.once('init', async () => {
   game.keybindings.register('journal-improvements', 'pastePlain', {
     name: 'journalImprovements.keybindings.pastePlain',
     restricted: true,
-    uneditable: [
+    editable: [
       { key: 'KeyV', modifiers: [KeyboardManager.MODIFIER_KEYS.CONTROL, KeyboardManager.MODIFIER_KEYS.SHIFT] },
     ],
     onDown: () => _onPaste(true),
