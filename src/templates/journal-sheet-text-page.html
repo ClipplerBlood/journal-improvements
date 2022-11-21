@@ -2,36 +2,37 @@
   <h1>{{title}}</h1>
 </header>
 
-{{#if (eq engine "markdown")}}
-  <!--  TODO: Markdown -->
-  <div class="markdown-editor">
-    {{#if editable}}
-      <a class="editor-edit"><i class="fas fa-edit"></i></a>
-    {{/if}}
-    <div class="enriched-content editor-content">
-      {{{editor.content}}}
-    </div>
-    {{#if editable}}
-      <div class="markdown-editor-content" style="display: none">
-        <input type="hidden" name="{{concat "pages." data._id ".text.format"}}" value="2" data-dtype="Number">
-        <textarea class="markdown-editor" name="{{concat "pages." data._id ".text.markdown"}}" spellcheck="false"
-                  autofocus>
-          {{~data.text.markdown~}}
-        </textarea>
+<section class="journal-page-content">
+  {{#if (eq engine "markdown")}}
+    <!--  TODO: Markdown -->
+    <div class="markdown-editor">
+      {{#if editable}}
+        <a class="editor-edit"><i class="fas fa-edit"></i></a>
+      {{/if}}
+      <div class="enriched-content editor-content">
+        {{{editor.content}}}
       </div>
-    {{/if}}
-  </div>
+      {{#if editable}}
+        <div class="markdown-editor-content" style="display: none">
+          <input type="hidden" name="{{concat "pages." data._id ".text.format"}}" value="2" data-dtype="Number">
+          <textarea class="markdown-editor" name="{{concat "pages." data._id ".text.markdown"}}" spellcheck="false"
+                    autofocus>
+            {{~data.text.markdown~}}
+          </textarea>
+        </div>
+      {{/if}}
+    </div>
 
 
-{{else}}
-  {{editor
-    editor.content
-    target=(concat "pages." data._id ".text.content")
-    button=true
-    editable=editable
-    engine=engine
-    class="journal-page-content"
-    collaborate=editor.collaborate
-  }}
-{{/if}}
-
+  {{else}}
+    {{editor
+      editor.content
+      target=(concat "pages." data._id ".text.content")
+      button=true
+      editable=editable
+      engine=engine
+      class="journal-page-content"
+      collaborate=editor.collaborate
+    }}
+  {{/if}}
+</section>
