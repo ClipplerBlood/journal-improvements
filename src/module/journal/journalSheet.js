@@ -364,8 +364,14 @@ export class ImprovedJournalSheet extends JournalSheet {
     else activate();
   }
 
+  /**
+   * Handle the editor focus out
+   * @param {FocusEvent} event
+   * @private
+   */
   _onEditorFocusout(event) {
-    this._onSubmit(event);
+    const isInsidePage = event.relatedTarget?.matches('section.journal-entry-content *') ?? false;
+    this._onSubmit(event, { preventRender: isInsidePage });
   }
 
   /**
@@ -395,7 +401,7 @@ export class ImprovedJournalSheet extends JournalSheet {
 
     // Update the pages
     if (pagesUpdateData.length > 0) {
-      await this.document.updateEmbeddedDocuments('JournalEntryPage', pagesUpdateData);
+      await this.document.updateEmbeddedDocuments('JournalEntryPage', pagesUpdateData, { render: false });
     }
 
     // const pageIds = this.pages;
